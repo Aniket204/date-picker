@@ -1,17 +1,31 @@
+<div class="date-picker-container">
+  <div class="date-display">
+    <div class="day-of-week">{{ selectedDate | date : "EEEE" }}</div>
+    <div class="day">
+      {{ selectedDate.getDate() }}
+      <div class="month">{{ selectedDate | date : "MMMM" }}</div>
+    </div>
 
-
-<style>
-  :host {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 14px;
-    box-sizing: border-box;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-  }
-</style>
-
-<div class="content" role="main">
-  <h1>Welcome to {{title}}!</h1>
-  <h2>Start editing to see some magic happen</h2>
+    <div class="year">{{ selectedDate.getFullYear() }}</div>
+  </div>
+  <div class="calendar-container">
+    <div class="month-year-controls">
+      <button (click)="changeMonth(-1)">&lt;</button>
+      <span>{{ months[selectedMonth] }}</span>
+      <button (click)="changeMonth(1)">&gt;</button>
+      <button (click)="changeYear(-1)">&lt;</button>
+      <span>{{ selectedYear }}</span>
+      <button (click)="changeYear(1)">&gt;</button>
+    </div>
+    <div class="calendar-grid">
+      <div
+        *ngFor="let day of days"
+        [class.outside-month]="day.isOutsideMonth"
+        [class.selected]="day.date.getTime() === selectedDate.getTime()"
+        (click)="selectDay(day.date)"
+      >
+        {{ day.date.getDate() }}
+      </div>
+    </div>
+  </div>
 </div>
